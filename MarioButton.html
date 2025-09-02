@@ -5,15 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mario Brick & Mushroom</title>
   <style>
-    body {
-      background-color: #f0f0f0;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      height: 100vh;
-      margin: 50px;
-      font-family: sans-serif;
-    }
+   body {
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* centré verticalement */
+  height: 100vh;
+  margin: 0; /* supprimer le margin pour éviter le débordement */
+}
+
+.container {
+  display: flex;
+  align-items: flex-start; /* garder l’alignement en haut */
+  justify-content: center; /* centré horizontalement */
+  position: relative;
+}
 
     .brick {
       height: 2px;
@@ -91,19 +97,22 @@
   </style>
 </head>
 <body>
-  <div class="brick one"></div>
+  <div class="container">
+    <div class="brick one"></div>
 
-  <div class="tooltip-mario-container">
-    <div class="box"></div>
-    <div class="mush">
-      <svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
-        <path d="M288.582 111.71h55.854v55.854h-55.854v-55.855zm-111.71 484.072h167.564v55.854H176.873v-55.854zM623.71 502.69h111.71v55.854h-111.71v-55.854zm55.855 55.854h111.709V614.4h-111.71v-55.855zm0 55.855h167.563v37.236H679.564V614.4z" fill="#B8332B"></path>
-        <path d="M512 0C229.23 0 0 229.23 0 512s229.23 512 512 512 512-229.23 512-512S794.77 0 512 0zm0 960C264.6 960 64 759.4 64 512S264.6 64 512 64s448 200.6 448 448-200.6 448-448 448z" fill="#F9E2E2"></path>
-        <path d="M400 400h224v224H400z" fill="#FF0000"></path>
-      </svg>
+    <div class="tooltip-mario-container">
+      <div class="box"></div>
+      <div class="mush">
+        <svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+          <path d="M288.582 111.71h55.854v55.854h-55.854v-55.855zm-111.71 484.072h167.564v55.854H176.873v-55.854zM623.71 502.69h111.71v55.854h-111.71v-55.854zm55.855 55.854h111.709V614.4h-111.71v-55.855zm0 55.855h167.563v37.236H679.564V614.4z" fill="#B8332B"></path>
+          <path d="M512 0C229.23 0 0 229.23 0 512s229.23 512 512 512 512-229.23 512-512S794.77 0 512 0zm0 960C264.6 960 64 759.4 64 512S264.6 64 512 64s448 200.6 448 448-200.6 448-448 448z" fill="#F9E2E2"></path>
+          <path d="M400 400h224v224H400z" fill="#FF0000"></path>
+        </svg>
+      </div>
     </div>
-  </div>
 
-  <div class="brick two"></div>
+    <div class="brick two"></div>
+  </div>
 </body>
+
 </html>
