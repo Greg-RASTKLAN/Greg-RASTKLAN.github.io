@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Button Coin Mario</title>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #222;
+    color: #fff;
+    font-family: sans-serif;
+  }
+  .button-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .button {
+    width: 100px;
+    height: 100px;
+    background: #ff0000;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: transform 0.2s;
+  }
+  .button:active {
+    transform: scale(0.9);
+  }
+  .button-icon div {
+    width: 10px;
+    height: 10px;
+    background: yellow;
+    margin: 2px;
+    border-radius: 50%;
+  }
+  .coin, .mario {
+    margin-top: 20px;
+  }
+  svg {
+    width: 50px;
+    height: 50px;
+  }
+</style>
+</head>
+<body>
+
+<div class="button-container">
+  <div class="button">
+    <div class="button-icon">
+      <div class="one"></div>
+      <div class="two"></div>
+      <div class="dots"></div>
+      <div class="dots2"></div>
+    </div>
+  </div>
+  <div class="coin">
+    <!-- SVG de la pièce -->
+    <svg viewBox="0 0 400 400">
+      <circle cx="200" cy="200" r="50" fill="#dc9c34"/>
+    </svg>
+  </div>
+  <div class="mario">
+    <!-- SVG simplifié de Mario -->
+    <svg viewBox="0 0 400 368">
+      <rect x="150" y="150" width="50" height="50" fill="#ecbf86"/>
+    </svg>
+  </div>
+</div>
+
+<script>
+  const button = document.querySelector('.button');
+  const coin = document.querySelector('.coin');
+  
+  button.addEventListener('click', () => {
+    // Animation simple de la pièce
+    coin.animate([
+      { transform: 'translateY(0px)', opacity: 1 },
+      { transform: 'translateY(-100px)', opacity: 0 }
+    ], {
+      duration: 800,
+      easing: 'ease-out'
+    });
+  });
+</script>
+
+</body>
+</html>
