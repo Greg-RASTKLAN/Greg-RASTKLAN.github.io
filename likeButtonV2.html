@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Like Button</title>
+<title>Like Button Debug</title>
 <style>
   #heart { opacity: 0; position: absolute; left: -9999px; }
   .like-button {
@@ -39,25 +39,33 @@
 <script>
   const heart = document.getElementById("heart");
   const likeCount = document.querySelector(".like-count");
-  const API_URL = "https://script.google.com/macros/s/AKfycbwjziRGTGvtnJ2kBJfWzfrw4azTg7DSqu-fc5HcTwmGKghMFX41cjzmvum85OnkoCo7/exec"; // remplace par ton URL Web App
+  const API_URL = "https://script.google.com/macros/s/AKfycbwjziRGTGvtnJ2kBJfWzfrw4azTg7DSqu-fc5HcTwmGKghMFX41cjzmvum85OnkoCo7/exec";
+
+  console.log("Script chargé. API_URL =", API_URL);
 
   // Callback JSONP
   function updateLike(data) {
+    console.log("Callback updateLike reçu :", data);
     likeCount.textContent = data.count;
   }
 
   // Charger le compteur initial
+  console.log("Chargement du compteur initial...");
   const initScript = document.createElement("script");
   initScript.src = API_URL + "?callback=updateLike";
+  initScript.onerror = () => console.log("Erreur chargement initScript !");
+  initScript.onload = () => console.log("InitScript chargé !");
   document.body.appendChild(initScript);
 
   // Incrémenter au clic
   heart.addEventListener("change", () => {
-  console.log("Clic détecté ! Envoi like=1");
-
+    console.log("Clic détecté ! checkbox.checked =", heart.checked);
     if (heart.checked) {
+      console.log("Création script JSONP pour like=1...");
       const script = document.createElement("script");
       script.src = API_URL + "?like=1&callback=updateLike";
+      script.onerror = () => console.log("Erreur chargement script like !");
+      script.onload = () => console.log("Script like chargé !");
       document.body.appendChild(script);
     }
   });
