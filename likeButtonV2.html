@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Like Button JSONP</title>
+<title>Like Button Toggle Persistant</title>
 <style>
   #heart { opacity: 0; position: absolute; left: -9999px; }
   .like-button { display: flex; align-items: center; justify-content: space-between; height: 48px; width: 150px; background: #3a3a3a; border-radius: 16px; padding: 0 10px; cursor: pointer; }
@@ -31,38 +31,48 @@
 <script>
   const heart = document.getElementById("heart");
   const likeCount = document.querySelector(".like-count");
-  const API_URL = "https://script.google.com/macros/s/AKfycbwqJMBOSHvyc94gmUA2pHPxKdyt5ncfVjDf3kQJ4fed463KCj1Sj0Vwf7GaA3NEPE2q/exec";
+  const API_URL = "https://script.google.com/macros/s/AKfycbwqJMBOSHvyc94gmUA2pHPxKdyt5ncfVjDf3kQJ4fed463KCj1Sj0Vwf7GaA3NEPE2q/exec"; // Remplace par ton URL Web App
 
-  // Charger compteur initial depuis le serveur (uniquement pour le nombre initial)
-  (function loadInitial() {
-    const script = document.createElement("script");
-    script.src = API_URL + "?callback=initLike";
-    document.body.appendChild(script);
-  })();
+  // Récupérer l'état "liked" depuis localStorage
+  let liked = localStorage.getItem("liked") === "true";
+  heart.checked = liked;
 
-  // JSONP callback initial
-  function initLike(data) {
+  // Mettre à jour l'UI selon l'état initial
+  function updateInitialUI(count) {
+    likeCount.textContent = count;
+  }
+
+  // JSONP callback pour récupérer le compteur initial
+  function updateLikeInitial(data) {
     if (data.count !== undefined) {
-      likeCount.textContent = data.count;
+      updateInitialUI(data.count);
     }
   }
 
-  // Clic pour liker/unliker
-  heart.addEventListener("change", () => {
-    const delta = heart.checked ? 1 : -1;
-    let currentCount = Number(likeCount.textContent) || 0;
-    currentCount += delta;
-    if (currentCount < 0) currentCount = 0;
-    likeCount.textContent = currentCount;
-
-    // Appel backend mais **ne change pas l'UI** côté client
+  // Charger le compteur initial depuis le backend
+  (function loadInitial() {
     const script = document.createElement("script");
-    script.src = API_URL + "?like=" + delta + "&callback=noop";
+    script.src = API_URL + "?callback=updateLikeInitial";
     document.body.appendChild(script);
-  });
+  })();
 
-  // Fonction vide pour JSONP lorsque l'UI ne doit pas changer
-  function noop() {}
+  // Fonction toggle like/unlike
+  function toggleLike() {
+    liked = !liked;
+    heart.checked = liked;
+
+    // Mise à jour immédiate de l'affichage
+    likeCount.textContent = Number(likeCount.textContent) + (liked ? 1 : -1);
+    localStorage.setItem("liked", liked);
+
+    // Appel backend pour incrémenter/décrémenter le compteur
+    const script = document.createElement("script");
+    script.src = API_URL + `?like=${liked ? 1 : -1}&callback=()=>{}`;
+    document.body.appendChild(script);
+  }
+
+  // Listener clic
+  heart.addEventListener("change", toggleLike);
 </script>
 
 </body>
