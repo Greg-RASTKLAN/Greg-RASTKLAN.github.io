@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Like Button JSONP</title>
+<title>Like Button Persistant</title>
 <style>
   #heart { opacity: 0; position: absolute; left: -9999px; }
   .like-button { display: flex; align-items: center; justify-content: space-between; height: 48px; width: 150px; background: #3a3a3a; border-radius: 16px; padding: 0 10px; cursor: pointer; }
@@ -29,31 +29,45 @@
 </div>
 
 <script>
-  const heart = document.getElementById("heart");
-  const likeCount = document.querySelector(".like-count");
-  const API_URL = "https://script.google.com/macros/s/AKfycbzu8dLOBOVxGhtUoBz388enb3fETA3F4zYzLAtl2MnB9XzYbh0aVceOa2wMmlUB9q9i/exec";
+const heart = document.getElementById("heart");
+const likeCount = document.querySelector(".like-count");
+const API_URL = "https://script.google.com/macros/s/AKfycbyUlUiMW9XjDoZwWXp52DUcM5FAyvcXaLXs-q9sLMBPBhSKBo-lKxztziqfFiW_YNmm/exec"; 
 
-  function updateLike(data) {
-    if (data.count !== undefined) {
-      likeCount.textContent = data.count;
-    }
+// Vérifie si l'utilisateur a déjà liké
+const hasLiked = localStorage.getItem("hasLiked") === "true";
+heart.checked = hasLiked;
+
+// Callback JSONP
+function updateLike(data) {
+  if (data.count !== undefined) {
+    likeCount.textContent = data.count;
+  } else if (data.error) {
+    console.error("Erreur serveur", data.error);
   }
+}
 
-  // Charger compteur initial
-  (function loadInitial() {
-    const script = document.createElement("script");
-    script.src = API_URL + "?callback=updateLike";
-    document.body.appendChild(script);
-  })();
+// Charger compteur initial
+(function loadInitial() {
+  const script = document.createElement("script");
+  script.src = API_URL + "?callback=updateLike";
+  document.body.appendChild(script);
+})();
 
-  // Clic pour liker
-  heart.addEventListener("change", () => {
-    if (heart.checked) {
-      const script = document.createElement("script");
-      script.src = API_URL + "?like=1&callback=updateLike";
-      document.body.appendChild(script);
-    }
-  });
+// Clic pour liker
+heart.addEventListener("change", () => {
+  if (!heart.checked) return; // Ignore le dé-check
+
+  // Si déjà liké localement, ne rien faire
+  if (localStorage.getItem("hasLiked") === "true") return;
+
+  // Envoi du like
+  const script = document.createElement("script");
+  script.src = API_URL + "?like=1&callback=updateLike";
+  document.body.appendChild(script);
+
+  // Marquer comme liké localement
+  localStorage.setItem("hasLiked", "true");
+});
 </script>
 
 </body>
