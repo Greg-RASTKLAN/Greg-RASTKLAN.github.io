@@ -6,12 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Socials</title>
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-
   <style>
+    /* On cache l'input sans display:none pour que l'événement fonctionne */
     #heart {
-      display: none;
+      opacity: 0;
+      position: absolute;
+      left: -9999px;
     }
 
     .like-button {
@@ -24,114 +24,101 @@
       border: none;
       background-color: #3a3a3a;
       overflow: hidden;
-      
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 10px;
     }
 
     .like {
-      width: 70%;
-      height: 100%;
       display: flex;
-      cursor: pointer;
       align-items: center;
-      justify-content: space-evenly;
+      cursor: pointer;
     }
 
     .like-icon {
       fill: #505050;
       height: 28px;
       width: 28px;
+      margin-right: 8px;
+      transition: fill 0.2s ease-out, transform 0.2s ease-out;
     }
 
-.like-text {
+    .like-text {
       color: #fcfcfc;
       font-size: 16px;
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     }
 
     .like-count {
-      position: absolute;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      right: 0;
-      width: 30%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       color: #717070;
       font-size: 16px;
-      border-left: 2px solid #4e4e4e;
-      transition: all 0.5s ease-out;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      transition: all 0.3s ease-out;
     }
 
-    .like-count.two {
-      transform: translateY(40px);
-    }
-
-    .on:checked ~ .like .like-icon {
+    .on:checked + label .like-icon {
       fill: #fc4e4e;
-      animation: enlarge 0.2s ease-out 1;
-      transition: all 0.2s ease-out;
+      transform: scale(1.2);
     }
 
-    .on:checked ~ .like-count.two {
-      transform: translateX(0);
+    .on:checked ~ .like-count {
       color: #fcfcfc;
-    }
-
-    .on:checked ~ .like-count.one {
-      transform: translateY(-40px);
-    }
-
-    @keyframes enlarge {
-      0% {
-        transform: scale(0.5);
-      }
-      100% {
-        transform: scale(1.2);
-      }
     }
   </style>
 </head>
-
 <body>
   <div class="like-button">
     <input class="on" id="heart" type="checkbox" />
     <label class="like" for="heart">
-      <svg
-        class="like-icon"
-        fill-rule="nonzero"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z"
-        ></path>
+      <svg class="like-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z"/>
       </svg>
       <span class="like-text">Likes</span>
     </label>
-    <span class="like-count one"></span>
-    <span class="like-count two"></span>
+    <span class="like-count">0</span>
   </div>
 
   <script>
     const heart = document.getElementById("heart");
-const likeCount = document.querySelector(".like-count.one");
-const API_URL = "https://script.google.com/macros/s/AKfycbwHUDlGjzcF7jZP8Wsd-NDlzbyR-nUdpScKKpBXMByTwIsnpEZIGlDaANDs6wljGvs/exec"; // <- remplace par ton URL
+    const likeCount = document.querySelector(".like-count");
+    const API_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec"; // <- remplace par ton URL
 
-// Charger le compteur global au chargement
-fetch(API_URL)
-  .then(res => res.json())
-  .then(data => likeCount.textContent = data.count);
+    // Fonction pour récupérer le compteur
+    function loadLikes() {
+      fetch(API_URL)
+        .then(res => res.json())
+        .then(data => {
+          console.log("GET response:", data);
+          if (data.count !== undefined) {
+            likeCount.textContent = data.count;
+          } else {
+            likeCount.textContent = 0;
+          }
+        })
+        .catch(err => console.error("Erreur GET:", err));
+    }
 
-// Poster un like
-heart.addEventListener("change", () => {
-  if (heart.checked) {
-    fetch(API_URL, { method: "POST" })
-      .then(res => res.json())
-      .then(data => likeCount.textContent = data.count);
-  }
-});
+    // Charger le compteur au chargement
+    loadLikes();
 
+    // Poster un like
+    heart.addEventListener("change", () => {
+      if (heart.checked) {
+        fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ like: 1 })
+        })
+        .then(res => res.json())
+        .then(data => {
+          console.log("POST response:", data);
+          if (data.count !== undefined) {
+            likeCount.textContent = data.count;
+          }
+        })
+        .catch(err => console.error("Erreur POST:", err));
+      }
+    });
   </script>
 </body>
 </html>
