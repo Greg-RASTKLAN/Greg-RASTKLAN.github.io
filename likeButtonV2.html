@@ -10,82 +10,111 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 
   <style>
-    .Btn {
-      width: 140px;
-      height: 35px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      border: none;
-      border-radius: 5px;
-      overflow: hidden;
-      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.089);
-      cursor: pointer;
-      background-color: transparent;
+    #heart {
+      display: none;
     }
 
-    .leftContainer {
-      width: 60%;
-      height: 100%;
-      background-color: rgb(238, 0, 0);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .leftContainer .like {
-      color: white;
-      font-weight: 600;
-    }
-
-    .likeCount {
-      width: 40%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: rgb(238, 0, 0);
-      font-weight: 600;
+    .like-button {
       position: relative;
-      background-color: white;
+      cursor: pointer;
+      display: flex;
+      height: 48px;
+      width: 136px;
+      border-radius: 16px;
+      border: none;
+      background-color: #1d1d1d;
+      overflow: hidden;
+      box-shadow:
+        inset -2px -2px 5px rgba(255, 255, 255, 0.2),
+        inset 2px 2px 5px rgba(0, 0, 0, 0.1),
+        4px 4px 10px rgba(0, 0, 0, 0.4),
+        -2px -2px 8px rgba(255, 255, 255, 0.1);
     }
 
-    .likeCount::before {
-      height: 8px;
-      width: 8px;
+    .like {
+      width: 70%;
+      height: 100%;
+      display: flex;
+      cursor: pointer;
+      align-items: center;
+      justify-content: space-evenly;
+    }
+
+    .like-icon {
+      fill: #505050;
+      height: 28px;
+      width: 28px;
+    }
+
+    .like-text {
+      color: #fcfcfc;
+      font-size: 16px;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .like-count {
       position: absolute;
-      content: "";
-      background-color: rgb(255, 255, 255);
-      transform: rotate(45deg);
-      left: -4px;
+      right: 0;
+      width: 30%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #717070;
+      font-size: 16px;
+      border-left: 2px solid #4e4e4e;
+      transition: all 0.5s ease-out;
     }
 
-    .Btn:hover .leftContainer {
-      background-color: rgb(219, 0, 0);
+    .like-count.two {
+      transform: translateY(40px);
     }
 
-    .Btn:active .leftContainer {
-      background-color: rgb(201, 0, 0);
+    .on:checked ~ .like .like-icon {
+      fill: #fc4e4e;
+      animation: enlarge 0.2s ease-out 1;
+      transition: all 0.2s ease-out;
     }
 
-    .Btn:active .leftContainer svg {
-      transform: scale(1.15);
-      transform-origin: top;
+    .on:checked ~ .like-count.two {
+      transform: translateX(0);
+      color: #fcfcfc;
+    }
+
+    .on:checked ~ .like-count.one {
+      transform: translateY(-40px);
+    }
+
+    @keyframes enlarge {
+      0% {
+        transform: scale(0.5);
+      }
+      100% {
+        transform: scale(1.2);
+      }
     }
   </style>
 </head>
 
 <body>
-  <button class="Btn">
-    <span class="leftContainer">
-      <svg fill="white" viewBox="0 0 512 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"></path></svg>
-      <span class="like">Like</span>
-    </span>
-    <span class="likeCount">
-      2,050
-    </span>
-  </button>
+  <div class="like-button">
+    <input class="on" id="heart" type="checkbox" />
+    <label class="like" for="heart">
+      <svg
+        class="like-icon"
+        fill-rule="nonzero"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z"
+        ></path>
+      </svg>
+      <span class="like-text">Likes</span>
+    </label>
+    <span class="like-count one">68</span>
+    <span class="like-count two">69</span>
+  </div>
 
   <script>
     
