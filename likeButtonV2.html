@@ -1,85 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Like Button</title>
-  <style>
-    /* Style général du bouton */
-    #heart { opacity: 0; position: absolute; left: -9999px; }
-    .like-button {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 48px;
-      width: 150px;
-      background: #3a3a3a;
-      border-radius: 16px;
-      padding: 0 10px;
-      cursor: pointer;
-    }
-    .like {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-    }
-    .like-icon {
-      fill: #505050;
-      height: 28px;
-      width: 28px;
-      margin-right: 8px;
-      transition: fill 0.2s, transform 0.2s;
-    }
-    .like-text {
-      color: #fcfcfc;
-      font-family: "Segoe UI", sans-serif;
-      font-size: 16px;
-    }
-    .like-count {
-      color: #717070;
-      font-family: "Segoe UI", sans-serif;
-      font-size: 16px;
-      transition: color 0.3s;
-    }
-    .on:checked + label .like-icon { fill: #fc4e4e; transform: scale(1.2); }
-    .on:checked ~ .like-count { color: #fcfcfc; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Like Button</title>
+<style>
+  #heart { opacity: 0; position: absolute; left: -9999px; }
+  .like-button {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 48px; width: 150px; background: #3a3a3a; border-radius: 16px;
+    padding: 0 10px; cursor: pointer;
+  }
+  .like { display: flex; align-items: center; cursor: pointer; }
+  .like-icon { fill: #505050; height: 28px; width: 28px; margin-right: 8px;
+    transition: fill 0.2s, transform 0.2s;
+  }
+  .like-text { color: #fcfcfc; font-family: "Segoe UI", sans-serif; font-size: 16px; }
+  .like-count { color: #717070; font-family: "Segoe UI", sans-serif; font-size: 16px;
+    transition: color 0.3s;
+  }
+  .on:checked + label .like-icon { fill: #fc4e4e; transform: scale(1.2); }
+  .on:checked ~ .like-count { color: #fcfcfc; }
+</style>
 </head>
 <body>
-  <div class="like-button">
-    <input type="checkbox" id="heart" class="on">
-    <label class="like" for="heart">
-      <svg class="like-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z"/>
-      </svg>
-      <span class="like-text">Likes</span>
-    </label>
-    <span class="like-count">0</span>
-  </div>
 
-  <script>
-    const heart = document.getElementById("heart");
-    const likeCount = document.querySelector(".like-count");
-    const API_URL = "https://script.google.com/macros/s/AKfycbx8nV5xaW0mARbjVOUPSfOy8kbre0uqQUrGNGenPZjryDXkn0fifWsi520zbseUZwzd/exec"; // remplace par ton URL Web App
+<div class="like-button">
+  <input type="checkbox" id="heart" class="on">
+  <label class="like" for="heart">
+    <svg class="like-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z"/>
+    </svg>
+    <span class="like-text">Likes</span>
+  </label>
+  <span class="like-count">0</span>
+</div>
 
-    // Callback JSONP
-    function updateLike(data) {
-      likeCount.textContent = data.count;
+<script>
+  const heart = document.getElementById("heart");
+  const likeCount = document.querySelector(".like-count");
+  const API_URL = "https://script.google.com/macros/s/AKfycbxKut2dmraAxxk6VfHq8989AjmAbSC8q8qWUriJ5nzmH0O4blNYrPOBjGagk_zpzGdm/exec"; // remplace par ton URL Web App
+
+  // Callback JSONP
+  function updateLike(data) {
+    likeCount.textContent = data.count;
+  }
+
+  // Charger le compteur initial
+  const initScript = document.createElement("script");
+  initScript.src = API_URL + "?callback=updateLike";
+  document.body.appendChild(initScript);
+
+  // Incrémenter au clic
+  heart.addEventListener("change", () => {
+    if (heart.checked) {
+      const script = document.createElement("script");
+      script.src = API_URL + "?like=1&callback=updateLike";
+      document.body.appendChild(script);
     }
+  });
+</script>
 
-    // Charger le compteur initial
-    const initScript = document.createElement("script");
-    initScript.src = API_URL + "?callback=updateLike";
-    document.body.appendChild(initScript);
-
-    // Incrémenter au clic
-    heart.addEventListener("change", () => {
-      if (heart.checked) {
-        const script = document.createElement("script");
-        script.src = API_URL + "?like=1&callback=updateLike";
-        document.body.appendChild(script);
-      }
-    });
-  </script>
 </body>
 </html>
