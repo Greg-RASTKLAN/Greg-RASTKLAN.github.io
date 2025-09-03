@@ -7,7 +7,6 @@
   <title>My Socials</title>
 
   <style>
-    /* On cache l'input sans display:none pour que l'événement fonctionne */
     #heart {
       opacity: 0;
       position: absolute;
@@ -81,35 +80,30 @@
   <script>
     const heart = document.getElementById("heart");
     const likeCount = document.querySelector(".like-count");
-    const API_URL = "https://script.google.com/macros/s/AKfycbw99xT4ctlI3Z2CVDLiMdhO251RtJLhwMeHZmyHoS5Cwlmo-PgKg4JpHiaaUG9xHO0X/exec"; // <- ton URL Google Script
+    const API_URL = "https://script.google.com/macros/s/AKfycbw99xT4ctlI3Z2CVDLiMdhO251RtJLhwMeHZmyHoS5Cwlmo-PgKg4JpHiaaUG9xHO0X/exec"; // ton Google Script
 
-    // Charger le compteur initial
+    // On utilise un proxy CORS pour contourner la restriction
+    const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
+
     function loadLikes() {
-      fetch(API_URL)
+      fetch(CORS_PROXY + API_URL)
         .then(res => res.json())
         .then(data => {
           console.log("GET response:", data);
-          if (data.count !== undefined) {
-            likeCount.textContent = data.count;
-          } else {
-            likeCount.textContent = 0;
-          }
+          likeCount.textContent = data.count ?? 0;
         })
         .catch(err => console.error("Erreur GET:", err));
     }
 
     loadLikes();
 
-    // Incrémenter le compteur quand on clique
     heart.addEventListener("change", () => {
       if (heart.checked) {
-        fetch(API_URL + "?like=1") // on passe le paramètre like=1
+        fetch(CORS_PROXY + API_URL + "?like=1")
           .then(res => res.json())
           .then(data => {
             console.log("GET like response:", data);
-            if (data.count !== undefined) {
-              likeCount.textContent = data.count;
-            }
+            likeCount.textContent = data.count ?? likeCount.textContent;
           })
           .catch(err => console.error("Erreur GET like:", err));
       }
