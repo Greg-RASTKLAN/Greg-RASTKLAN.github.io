@@ -31,38 +31,26 @@
 <script>
   const heart = document.getElementById("heart");
   const likeCount = document.querySelector(".like-count");
-  const API_URL = "https://script.google.com/macros/s/AKfycbyUlUiMW9XjDoZwWXp52DUcM5FAyvcXaLXs-q9sLMBPBhSKBo-lKxztziqfFiW_YNmm/exec"; // Remplacer par l'URL de la Web App
-
-  function logStep(step, info) { console.log("[DEBUG]", step, info); }
+  const API_URL = "https://script.google.com/macros/s/AKfycbyUlUiMW9XjDoZwWXp52DUcM5FAyvcXaLXs-q9sLMBPBhSKBo-lKxztziqfFiW_YNmm/exec";
 
   function updateLike(data) {
-    logStep("updateLike", data);
     if (data.count !== undefined) {
       likeCount.textContent = data.count;
-    } else if (data.error) {
-      console.error("[ERROR serveur]", data.error);
     }
   }
 
   // Charger compteur initial
   (function loadInitial() {
-    logStep("loadInitial", "Création du script JSONP initial");
     const script = document.createElement("script");
     script.src = API_URL + "?callback=updateLike";
-    script.onload = () => logStep("loadInitial", "Script initial chargé avec succès");
-    script.onerror = () => console.error("[ERROR] Erreur chargement compteur initial :", script.src);
     document.body.appendChild(script);
   })();
 
   // Clic pour liker
   heart.addEventListener("change", () => {
-    logStep("clic", "Checkbox.checked = " + heart.checked);
     if (heart.checked) {
-      logStep("clic", "Création script JSONP pour like=1");
       const script = document.createElement("script");
       script.src = API_URL + "?like=1&callback=updateLike";
-      script.onload = () => logStep("clic", "Script like chargé avec succès");
-      script.onerror = () => console.error("[ERROR] Erreur chargement script like :", script.src);
       document.body.appendChild(script);
     }
   });
