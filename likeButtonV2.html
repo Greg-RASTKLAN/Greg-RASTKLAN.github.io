@@ -81,9 +81,9 @@
   <script>
     const heart = document.getElementById("heart");
     const likeCount = document.querySelector(".like-count");
-    const API_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec"; // <- remplace par ton URL
+    const API_URL = "https://script.google.com/macros/s/AKfycbw99xT4ctlI3Z2CVDLiMdhO251RtJLhwMeHZmyHoS5Cwlmo-PgKg4JpHiaaUG9xHO0X/exec"; // <- ton URL Google Script
 
-    // Fonction pour récupérer le compteur
+    // Charger le compteur initial
     function loadLikes() {
       fetch(API_URL)
         .then(res => res.json())
@@ -98,25 +98,20 @@
         .catch(err => console.error("Erreur GET:", err));
     }
 
-    // Charger le compteur au chargement
     loadLikes();
 
-    // Poster un like
+    // Incrémenter le compteur quand on clique
     heart.addEventListener("change", () => {
       if (heart.checked) {
-        fetch(API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ like: 1 })
-        })
-        .then(res => res.json())
-        .then(data => {
-          console.log("POST response:", data);
-          if (data.count !== undefined) {
-            likeCount.textContent = data.count;
-          }
-        })
-        .catch(err => console.error("Erreur POST:", err));
+        fetch(API_URL + "?like=1") // on passe le paramètre like=1
+          .then(res => res.json())
+          .then(data => {
+            console.log("GET like response:", data);
+            if (data.count !== undefined) {
+              likeCount.textContent = data.count;
+            }
+          })
+          .catch(err => console.error("Erreur GET like:", err));
       }
     });
   </script>
