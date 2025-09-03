@@ -31,38 +31,38 @@
 <script>
   const heart = document.getElementById("heart");
   const likeCount = document.querySelector(".like-count");
-  const API_URL = "https://script.google.com/macros/s/AKfycbwqJMBOSHvyc94gmUA2pHPxKdyt5ncfVjDf3kQJ4fed463KCj1Sj0Vwf7GaA3NEPE2q/exec"; // Remplacer par ton URL Web App
+  const API_URL = "https://script.google.com/macros/s/AKfycbwqJMBOSHvyc94gmUA2pHPxKdyt5ncfVjDf3kQJ4fed463KCj1Sj0Vwf7GaA3NEPE2q/exec";
 
-  // JSONP callback pour mettre à jour le compteur côté client
-  function updateLike(data) {
-    if (data.count !== undefined) {
-      likeCount.textContent = data.count;
-    } else if (data.error) {
-      console.error("[ERROR serveur]", data.error);
-    }
-  }
-
-  // Charger le compteur initial depuis le serveur
+  // Charger compteur initial depuis le serveur (uniquement pour le nombre initial)
   (function loadInitial() {
     const script = document.createElement("script");
-    script.src = API_URL + "?callback=updateLike";
+    script.src = API_URL + "?callback=initLike";
     document.body.appendChild(script);
   })();
 
-  // Clic pour liker / unliker
+  // JSONP callback initial
+  function initLike(data) {
+    if (data.count !== undefined) {
+      likeCount.textContent = data.count;
+    }
+  }
+
+  // Clic pour liker/unliker
   heart.addEventListener("change", () => {
-    // Calcul immédiat côté client
     const delta = heart.checked ? 1 : -1;
     let currentCount = Number(likeCount.textContent) || 0;
     currentCount += delta;
     if (currentCount < 0) currentCount = 0;
     likeCount.textContent = currentCount;
 
-    // Envoi de la modification au backend
+    // Appel backend mais **ne change pas l'UI** côté client
     const script = document.createElement("script");
-    script.src = API_URL + "?like=" + delta + "&callback=updateLike";
+    script.src = API_URL + "?like=" + delta + "&callback=noop";
     document.body.appendChild(script);
   });
+
+  // Fonction vide pour JSONP lorsque l'UI ne doit pas changer
+  function noop() {}
 </script>
 
 </body>
