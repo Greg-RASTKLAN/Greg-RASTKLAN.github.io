@@ -109,12 +109,29 @@
       </svg>
       <span class="like-text">Likes</span>
     </label>
-    <span class="like-count one">68</span>
-    <span class="like-count two">69</span>
+    <span class="like-count one"></span>
+    <span class="like-count two"></span>
   </div>
 
   <script>
-    
+    const heart = document.getElementById("heart");
+const likeCount = document.querySelector(".like-count.one");
+const API_URL = "https://script.google.com/macros/s/AKfycbwHUDlGjzcF7jZP8Wsd-NDlzbyR-nUdpScKKpBXMByTwIsnpEZIGlDaANDs6wljGvs/exec"; // <- remplace par ton URL
+
+// Charger le compteur global au chargement
+fetch(API_URL)
+  .then(res => res.json())
+  .then(data => likeCount.textContent = data.count);
+
+// Poster un like
+heart.addEventListener("change", () => {
+  if (heart.checked) {
+    fetch(API_URL, { method: "POST" })
+      .then(res => res.json())
+      .then(data => likeCount.textContent = data.count);
+  }
+});
+
   </script>
 </body>
 </html>
