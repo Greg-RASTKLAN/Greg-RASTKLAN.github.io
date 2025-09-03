@@ -53,6 +53,8 @@
 
   // Incrémenter au clic
   heart.addEventListener("change", () => {
+  console.log("Clic détecté ! Envoi like=1");
+
     if (heart.checked) {
       const script = document.createElement("script");
       script.src = API_URL + "?like=1&callback=updateLike";
