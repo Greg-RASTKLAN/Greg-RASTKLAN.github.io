@@ -2,72 +2,52 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Socials</title>
-
+  <title>Like Button</title>
   <style>
-    #heart {
-      opacity: 0;
-      position: absolute;
-      left: -9999px;
-    }
-
+    /* Style général du bouton */
+    #heart { opacity: 0; position: absolute; left: -9999px; }
     .like-button {
-      position: relative;
-      cursor: pointer;
       display: flex;
-      height: 48px;
-      width: 136px;
-      border-radius: 16px;
-      border: none;
-      background-color: #3a3a3a;
-      overflow: hidden;
       align-items: center;
       justify-content: space-between;
+      height: 48px;
+      width: 150px;
+      background: #3a3a3a;
+      border-radius: 16px;
       padding: 0 10px;
+      cursor: pointer;
     }
-
     .like {
       display: flex;
       align-items: center;
       cursor: pointer;
     }
-
     .like-icon {
       fill: #505050;
       height: 28px;
       width: 28px;
       margin-right: 8px;
-      transition: fill 0.2s ease-out, transform 0.2s ease-out;
+      transition: fill 0.2s, transform 0.2s;
     }
-
     .like-text {
       color: #fcfcfc;
+      font-family: "Segoe UI", sans-serif;
       font-size: 16px;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     }
-
     .like-count {
       color: #717070;
+      font-family: "Segoe UI", sans-serif;
       font-size: 16px;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      transition: all 0.3s ease-out;
+      transition: color 0.3s;
     }
-
-    .on:checked + label .like-icon {
-      fill: #fc4e4e;
-      transform: scale(1.2);
-    }
-
-    .on:checked ~ .like-count {
-      color: #fcfcfc;
-    }
+    .on:checked + label .like-icon { fill: #fc4e4e; transform: scale(1.2); }
+    .on:checked ~ .like-count { color: #fcfcfc; }
   </style>
 </head>
 <body>
   <div class="like-button">
-    <input class="on" id="heart" type="checkbox" />
+    <input type="checkbox" id="heart" class="on">
     <label class="like" for="heart">
       <svg class="like-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z"/>
@@ -80,32 +60,24 @@
   <script>
     const heart = document.getElementById("heart");
     const likeCount = document.querySelector(".like-count");
-    const API_URL = "https://script.google.com/macros/s/AKfycbw99xT4ctlI3Z2CVDLiMdhO251RtJLhwMeHZmyHoS5Cwlmo-PgKg4JpHiaaUG9xHO0X/exec"; // ton Google Script
+    const API_URL = "https://script.google.com/macros/s/AKfycbx8nV5xaW0mARbjVOUPSfOy8kbre0uqQUrGNGenPZjryDXkn0fifWsi520zbseUZwzd/exec"; // remplace par ton URL Web App
 
-    // On utilise un proxy CORS pour contourner la restriction
-    const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
-
-    function loadLikes() {
-      fetch(CORS_PROXY + API_URL)
-        .then(res => res.json())
-        .then(data => {
-          console.log("GET response:", data);
-          likeCount.textContent = data.count ?? 0;
-        })
-        .catch(err => console.error("Erreur GET:", err));
+    // Callback JSONP
+    function updateLike(data) {
+      likeCount.textContent = data.count;
     }
 
-    loadLikes();
+    // Charger le compteur initial
+    const initScript = document.createElement("script");
+    initScript.src = API_URL + "?callback=updateLike";
+    document.body.appendChild(initScript);
 
+    // Incrémenter au clic
     heart.addEventListener("change", () => {
       if (heart.checked) {
-        fetch(CORS_PROXY + API_URL + "?like=1")
-          .then(res => res.json())
-          .then(data => {
-            console.log("GET like response:", data);
-            likeCount.textContent = data.count ?? likeCount.textContent;
-          })
-          .catch(err => console.error("Erreur GET like:", err));
+        const script = document.createElement("script");
+        script.src = API_URL + "?like=1&callback=updateLike";
+        document.body.appendChild(script);
       }
     });
   </script>
