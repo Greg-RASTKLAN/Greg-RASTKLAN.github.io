@@ -31,15 +31,19 @@
 <script>
   const heart = document.getElementById("heart");
   const likeCount = document.querySelector(".like-count");
-  const API_URL = "https://script.google.com/macros/s/AKfycbwqJMBOSHvyc94gmUA2pHPxKdyt5ncfVjDf3kQJ4fed463KCj1Sj0Vwf7GaA3NEPE2q/exec"; // Remplace par ton URL Web App
+  const API_URL = "https://script.google.com/macros/s/AKfycbwqJMBOSHvyc94gmUA2pHPxKdyt5ncfVjDf3kQJ4fed463KCj1Sj0Vwf7GaA3NEPE2q/exec"; // Ton URL Web App
+
+  // 🔑 Clé unique basée sur l’URL de la page
+  const pageKey = "liked_" + window.location.pathname;
 
   // Récupérer l'état "liked" depuis localStorage
-  let liked = localStorage.getItem("liked") === "true";
+  let liked = localStorage.getItem(pageKey) === "true";
   heart.checked = liked;
 
   // Mettre à jour l'UI selon l'état initial
   function updateInitialUI(count) {
     likeCount.textContent = count;
+    heart.checked = liked; // garde le cœur rouge si déjà liké
   }
 
   // JSONP callback pour récupérer le compteur initial
@@ -63,7 +67,7 @@
 
     // Mise à jour immédiate de l'affichage
     likeCount.textContent = Number(likeCount.textContent) + (liked ? 1 : -1);
-    localStorage.setItem("liked", liked);
+    localStorage.setItem(pageKey, liked);
 
     // Appel backend pour incrémenter/décrémenter le compteur
     const script = document.createElement("script");
