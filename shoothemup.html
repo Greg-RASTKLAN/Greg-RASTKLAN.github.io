@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bouton Pixel Shooter</title>
   <style>
+/* From Uiverse.io by whoisyourdeadie */ 
 .button-wrapper {
   position: relative;
   width: 200px;
   height: 74px;
-  margin: 0 auto; /* Centrage horizontal */
 }
 
 .button {
@@ -82,7 +82,6 @@
   }
 }
 
-/* Les monstres et animations restent inchangés */
 .monster {
   position: absolute;
   background: transparent;
@@ -91,192 +90,329 @@
   height: 4px;
 }
 
-@keyframes spriteAnim {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(-373px);
-  }
-}
-
-.button:active .sprite {
-  animation: none;
-  transform: translateY(-373px);
-}
-
-.laser {
-  position: absolute;
-  left: 50px;
-  top: 0px;
-  width: 4px;
-  height: 16px;
-  background: yellow;
-  z-index: -1;
-  transform: translateX(-50%);
-  pointer-events: none;
-  opacity: 0px;
-}
-
-.button:active ~ .laser-1 {
-  left: 80%;
-  animation: shoot 0.7s linear 0s;
-}
-.button:active ~ .laser-2 {
-  left: 20%;
-  animation: shoot 0.7s linear 0.1s;
-}
-.button:active ~ .laser-3 {
-  left: 50%;
-  animation: shoot 0.7s linear 0.2s;
-}
-
-@keyframes shoot {
-  0% {
-    transform: translate(-50%, 0);
-  }
-  100% {
-    transform: translate(-50%, -400px);
-  }
-}
-
-/* Conteneur général pour les monstres */
-.monster-container {
-  position: relative;
-  width: 100%;
-  height: 100vh; /* plein écran */
-  overflow: hidden;
-}
-
-/* Style de base pour tous les monstres */
-.monster {
-  position: absolute;
-  background: transparent;
-  width: 4px;
-  height: 4px;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-/* Animations de mouvement pour chaque monstre */
 @keyframes moveMonster1 {
-  0%   { transform: translate(-50%, -50%) translateX(0) translateY(0); }
-  50%  { transform: translate(-50%, -50%) translateX(200px) translateY(100px); }
-  100% { transform: translate(-50%, -50%) translateX(0) translateY(0); }
+  0% {
+    transform: translate(-500px, -40px);
+  }
+  10% {
+    transform: translate(-400px, 0);
+  }
+  20% {
+    transform: translate(-300px, 40px);
+  }
+  30% {
+    transform: translate(-200px, 0);
+  }
+  40% {
+    transform: translate(-100px, -40px);
+  }
+  50% {
+    transform: translate(0px, 0);
+  }
+  60% {
+    transform: translate(100px, 40px);
+  }
+  70% {
+    transform: translate(200px, 0);
+  }
+  80% {
+    transform: translate(300px, -40px);
+  }
+  90% {
+    transform: translate(400px, 0);
+  }
+  100% {
+    transform: translate(500px, -40px);
+  }
 }
 
 @keyframes moveMonster2 {
-  0%   { transform: translate(-50%, -50%) translateX(0) translateY(0); }
-  50%  { transform: translate(-50%, -50%) translateX(-150px) translateY(150px); }
-  100% { transform: translate(-50%, -50%) translateX(0) translateY(0); }
+  0% {
+    transform: translate(-500px, 0);
+  }
+  10% {
+    transform: translate(-400px, -40px);
+  }
+  20% {
+    transform: translate(-300px, 0);
+  }
+  30% {
+    transform: translate(-200px, 40px);
+  }
+  40% {
+    transform: translate(-100px, 0);
+  }
+  50% {
+    transform: translate(0px, -40px);
+  }
+  60% {
+    transform: translate(100px, 0);
+  }
+  70% {
+    transform: translate(200px, 40px);
+  }
+  80% {
+    transform: translate(300px, 0);
+  }
+  90% {
+    transform: translate(400px, -40px);
+  }
+  100% {
+    transform: translate(500px, 0);
+  }
 }
 
 @keyframes moveMonster3 {
-  0%   { transform: translate(-50%, -50%) translateX(0) translateY(0); }
-  50%  { transform: translate(-50%, -50%) translateX(100px) translateY(-100px); }
-  100% { transform: translate(-50%, -50%) translateX(0) translateY(0); }
+  0% {
+    transform: translate(-500px, 40px);
+  }
+  10% {
+    transform: translate(-400px, 0);
+  }
+  20% {
+    transform: translate(-300px, -40px);
+  }
+  30% {
+    transform: translate(-200px, 0);
+  }
+  40% {
+    transform: translate(-100px, 40px);
+  }
+  50% {
+    transform: translate(0px, 0);
+  }
+  60% {
+    transform: translate(100px, -40px);
+  }
+  70% {
+    transform: translate(200px, 0);
+  }
+  80% {
+    transform: translate(300px, 40px);
+  }
+  90% {
+    transform: translate(400px, 0);
+  }
+  100% {
+    transform: translate(500px, 40px);
+  }
 }
 
 @keyframes moveMonster4 {
-  0%   { transform: translate(-50%, -50%) translateX(0) translateY(0); }
-  50%  { transform: translate(-50%, -50%) translateX(-120px) translateY(-80px); }
-  100% { transform: translate(-50%, -50%) translateX(0) translateY(0); }
+  0% {
+    transform: translate(-500px, 0);
+  }
+  10% {
+    transform: translate(-400px, 40px);
+  }
+  20% {
+    transform: translate(-300px, 0);
+  }
+  30% {
+    transform: translate(-200px, -40px);
+  }
+  40% {
+    transform: translate(-100px, 0);
+  }
+  50% {
+    transform: translate(0px, 40px);
+  }
+  60% {
+    transform: translate(100px, 0);
+  }
+  70% {
+    transform: translate(200px, -40px);
+  }
+  80% {
+    transform: translate(300px, 0);
+  }
+  90% {
+    transform: translate(400px, 40px);
+  }
+  100% {
+    transform: translate(500px, 0);
+  }
 }
 
 @keyframes moveMonster5 {
-  0%   { transform: translate(-50%, -50%) translateX(0) translateY(0); }
-  50%  { transform: translate(-50%, -50%) translateX(180px) translateY(-150px); }
-  100% { transform: translate(-50%, -50%) translateX(0) translateY(0); }
+  0% {
+    transform: translate(-500px, -40px);
+  }
+  10% {
+    transform: translate(-400px, 0);
+  }
+  20% {
+    transform: translate(-300px, 40px);
+  }
+  30% {
+    transform: translate(-200px, 0);
+  }
+  40% {
+    transform: translate(-100px, -40px);
+  }
+  50% {
+    transform: translate(0px, 0);
+  }
+  60% {
+    transform: translate(100px, 40px);
+  }
+  70% {
+    transform: translate(200px, 0);
+  }
+  80% {
+    transform: translate(300px, -40px);
+  }
+  90% {
+    transform: translate(400px, 0);
+  }
+  100% {
+    transform: translate(500px, -40px);
+  }
 }
 
 @keyframes moveMonster6 {
-  0%   { transform: translate(-50%, -50%) translateX(0) translateY(0); }
-  50%  { transform: translate(-50%, -50%) translateX(-200px) translateY(50px); }
-  100% { transform: translate(-50%, -50%) translateX(0) translateY(0); }
+  0% {
+    transform: translate(-500px, 0);
+  }
+  10% {
+    transform: translate(-400px, -40px);
+  }
+  20% {
+    transform: translate(-300px, 0);
+  }
+  30% {
+    transform: translate(-200px, 40px);
+  }
+  40% {
+    transform: translate(-100px, 0);
+  }
+  50% {
+    transform: translate(0px, -40px);
+  }
+  60% {
+    transform: translate(100px, 0);
+  }
+  70% {
+    transform: translate(200px, 40px);
+  }
+  80% {
+    transform: translate(300px, 0);
+  }
+  90% {
+    transform: translate(400px, -40px);
+  }
+  100% {
+    transform: translate(500px, 0);
+  }
 }
 
 @keyframes moveMonster7 {
-  0%   { transform: translate(-50%, -50%) translateX(0) translateY(0); }
-  50%  { transform: translate(-50%, -50%) translateX(150px) translateY(150px); }
-  100% { transform: translate(-50%, -50%) translateX(0) translateY(0); }
+  0% {
+    transform: translate(-500px, 40px);
+  }
+  10% {
+    transform: translate(-400px, 0);
+  }
+  20% {
+    transform: translate(-300px, -40px);
+  }
+  30% {
+    transform: translate(-200px, 0);
+  }
+  40% {
+    transform: translate(-100px, 40px);
+  }
+  50% {
+    transform: translate(0px, 0);
+  }
+  60% {
+    transform: translate(100px, -40px);
+  }
+  70% {
+    transform: translate(200px, 0);
+  }
+  80% {
+    transform: translate(300px, 40px);
+  }
+  90% {
+    transform: translate(400px, 0);
+  }
+  100% {
+    transform: translate(500px, 40px);
+  }
 }
 
 @keyframes moveMonster8 {
-  0%   { transform: translate(-50%, -50%) translateX(0) translateY(0); }
-  50%  { transform: translate(-50%, -50%) translateX(-100px) translateY(-150px); }
-  100% { transform: translate(-50%, -50%) translateX(0) translateY(0); }
+  0% {
+    transform: translate(-500px, 0);
+  }
+  10% {
+    transform: translate(-400px, 40px);
+  }
+  20% {
+    transform: translate(-300px, 0);
+  }
+  30% {
+    transform: translate(-200px, -40px);
+  }
+  40% {
+    transform: translate(-100px, 0);
+  }
+  50% {
+    transform: translate(0px, 40px);
+  }
+  60% {
+    transform: translate(100px, 0);
+  }
+  70% {
+    transform: translate(200px, -40px);
+  }
+  80% {
+    transform: translate(300px, 0);
+  }
+  90% {
+    transform: translate(400px, 40px);
+  }
+  100% {
+    transform: translate(500px, 0);
+  }
 }
 
 @keyframes moveMonster9 {
-  0%   { transform: translate(-50%, -50%) translateX(0) translateY(0); }
-  50%  { transform: translate(-50%, -50%) translateX(220px) translateY(80px); }
-  100% { transform: translate(-50%, -50%) translateX(0) translateY(0); }
+  0% {
+    transform: translate(-500px, -40px);
+  }
+  10% {
+    transform: translate(-400px, 0);
+  }
+  20% {
+    transform: translate(-300px, 40px);
+  }
+  30% {
+    transform: translate(-200px, 0);
+  }
+  40% {
+    transform: translate(-100px, -40px);
+  }
+  50% {
+    transform: translate(0px, 0);
+  }
+  60% {
+    transform: translate(100px, 40px);
+  }
+  70% {
+    transform: translate(200px, 0);
+  }
+  80% {
+    transform: translate(300px, -40px);
+  }
+  90% {
+    transform: translate(400px, 0);
+  }
+  100% {
+    transform: translate(500px, -40px);
+  }
 }
-
-/* Animations de sprites pour chaque monstre */
-@keyframes spriteMonster1 {
-  0%   { background-position: 0 0; }
-  100% { background-position: -64px 0; }
-}
-
-@keyframes spriteMonster2 {
-  0%   { background-position: 0 0; }
-  100% { background-position: -128px 0; }
-}
-
-@keyframes spriteMonster3 {
-  0%   { background-position: 0 0; }
-  100% { background-position: -192px 0; }
-}
-
-@keyframes spriteMonster4 {
-  0%   { background-position: 0 0; }
-  100% { background-position: -256px 0; }
-}
-
-@keyframes spriteMonster5 {
-  0%   { background-position: 0 0; }
-  100% { background-position: -320px 0; }
-}
-
-/* Application des animations à chaque monstre */
-.monster.monster1 {
-  animation: moveMonster1 6s infinite ease-in-out, spriteMonster1 0.5s steps(4) infinite;
-}
-
-.monster.monster2 {
-  animation: moveMonster2 5s infinite ease-in-out, spriteMonster2 0.6s steps(4) infinite;
-}
-
-.monster.monster3 {
-  animation: moveMonster3 7s infinite ease-in-out, spriteMonster3 0.7s steps(4) infinite;
-}
-
-.monster.monster4 {
-  animation: moveMonster4 6.5s infinite ease-in-out, spriteMonster4 0.5s steps(4) infinite;
-}
-
-.monster.monster5 {
-  animation: moveMonster5 5.5s infinite ease-in-out, spriteMonster5 0.6s steps(4) infinite;
-}
-
-.monster.monster6 {
-  animation: moveMonster6 6.2s infinite ease-in-out, spriteMonster1 0.5s steps(4) infinite;
-}
-
-.monster.monster7 {
-  animation: moveMonster7 7.2s infinite ease-in-out, spriteMonster2 0.6s steps(4) infinite;
-}
-
-.monster.monster8 {
-  animation: moveMonster8 6.8s infinite ease-in-out, spriteMonster3 0.7s steps(4) infinite;
-}
-
-.monster.monster9 {
-  animation: moveMonster9 5.9s infinite ease-in-out, spriteMonster4 0.5s steps(4) infinite;
-}
-
 
 @keyframes spriteMonster1 {
   0%,
@@ -1248,6 +1384,7 @@
     opacity: 0.8;
   }
 }
+
 
   </style>
 </head>
