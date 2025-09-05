@@ -9,6 +9,7 @@
   position: relative;
   width: 200px;
   height: 74px;
+  margin: 0 auto; /* Centrage horizontal */
 }
 
 .button {
@@ -30,6 +31,64 @@
   top: 0;
   left: 0;
   animation: spriteAnim 0.8s steps(5) infinite alternate;
+}
+
+@keyframes spriteAnim {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-373px);
+  }
+}
+
+.button:active .sprite {
+  animation: none;
+  transform: translateY(-373px);
+}
+
+.laser {
+  position: absolute;
+  left: 50px;
+  top: 0px;
+  width: 4px;
+  height: 16px;
+  background: yellow;
+  z-index: -1;
+  transform: translateX(-50%);
+  pointer-events: none;
+  opacity: 0px;
+}
+
+.button:active ~ .laser-1 {
+  left: 80%;
+  animation: shoot 0.7s linear 0s;
+}
+.button:active ~ .laser-2 {
+  left: 20%;
+  animation: shoot 0.7s linear 0.1s;
+}
+.button:active ~ .laser-3 {
+  left: 50%;
+  animation: shoot 0.7s linear 0.2s;
+}
+
+@keyframes shoot {
+  0% {
+    transform: translate(-50%, 0);
+  }
+  100% {
+    transform: translate(-50%, -400px);
+  }
+}
+
+/* Les monstres et animations restent inchangés */
+.monster {
+  position: absolute;
+  background: transparent;
+  top: 10%;
+  width: 4px;
+  height: 4px;
 }
 
 @keyframes spriteAnim {
