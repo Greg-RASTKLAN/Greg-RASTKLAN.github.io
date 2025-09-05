@@ -1294,15 +1294,21 @@
 }
 
 .monster-1 {
-  animation:
-    moveMonster1 9s linear infinite,
-    spriteMonster1 1s steps(1) infinite;
-  animation-delay: -8s, 0s;
+  
+
+
+  position: absolute;
+  top: 10%;
+  width: 4px;
+  height: 4px;
+  animation: moveMonster1 10s linear infinite; /* <- ajoute infinite */
+  animation-fill-mode: forwards; /* <- garde la position finale si besoin */
+
 }
 
 .monster-2 {
   animation:
-    moveMonster2 99s linear infinite,
+    moveMonster2 9s linear infinite,
     spriteMonster2 1s steps(1) infinite;
   animation-delay: -7s, 0s;
 }
